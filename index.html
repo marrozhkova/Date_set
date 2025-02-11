@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeitmethoden erklärt</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #ffffff;
+        transition: background-color 0.5s, color 0.5s;
+      }
+
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 100vh;
+        position: relative;
+        padding-bottom: 60px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #bb86fc;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .method {
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        background-color: rgba(30, 30, 30, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .method:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
+      }
+
+      h2 {
+        font-size: 18px;
+        color: #bb86fc;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 14px;
+        color: #e0e0e0;
+        margin-bottom: 15px;
+      }
+
+      button {
+        padding: 10px 15px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 8px;
+        background-color: #bb86fc;
+        color: #121212;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background-color: #9a67ea;
+        transform: scale(1.05);
+      }
+
+      #timeoutOutput,
+      #intervalOutput {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #bb86fc;
+        font-size: 14px;
+      }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(30, 30, 30, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 10px;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        color: #bb86fc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Zeitmethoden in JavaScript</h1>
+
+      <!-- setTimeout() Beispiel -->
+      <div class="method">
+        <h2>setTimeout()</h2>
+        <p>
+          Diese Methode führt eine Funktion nach einer bestimmten Verzögerung
+          aus.
+        </p>
+        <button id="timeoutButton">Starte Timeout</button>
+        <p id="timeoutOutput"></p>
+      </div>
+
+      <!-- setInterval() und clearInterval() Beispiel -->
+      <div class="method">
+        <h2>setInterval() und clearInterval()</h2>
+        <p>Diese Methode führt eine Funktion in regelmäßigen Abständen aus.</p>
+        <button id="intervalStartButton">
+          Starte Intervall (Hintergrund ändern)
+        </button>
+        <button id="intervalStopDelayedButton">
+          Stoppe Intervall (nach 5 Sekunden)
+        </button>
+        <button id="intervalStopButton">Stoppe Intervall (sofort)</button>
+        <p id="intervalOutput"></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p id="footerDateTime"></p>
+    </footer>
+
+    <script>
+      // setTimeout() Beispiel
+      document
+        .getElementById("timeoutButton") //wir holen uns das Element mit der ID "timeoutButton"
+        .addEventListener("click", function () {
+          //wir fügen einen EventListener hinzu, der auf das Klicken des Buttons reagiert
+          // 3 Sekunden Timer - nach 3 Sekunden wird die Nachricht angezeigt - Meine eigene Entscheidung, es kann auch anders sein
+          let counter = 3;
+          const timeoutOutput = document.getElementById("timeoutOutput"); //wir holen uns das Element mit der ID "timeoutOutput"
+          timeoutOutput.textContent = `Verbleibende Zeit: ${counter} Sekunden`; //wir setzen den Text des Elements auf "Verbleibende Zeit: 3 Sekunden"
+
+          //setInterval()  and clearInterval() sind später beschrieben
+
+          const countdown = setInterval(() => {
+            //wir setzen einen Interval, der jede Sekunde den Counter verringert
+            counter--; //wir verringern den Counter um 1 und setzen den Text des Elements auf "Verbleibende Zeit: 2 Sekunden"
+            timeoutOutput.textContent = `Verbleibende Zeit: ${counter} Sekunden`; //wir setzen den Text des Elements auf "Verbleibende Zeit: 2 Sekunden"
+
+            if (counter <= 0) {
+              //wenn der Counter kleiner oder gleich 0 ist, dann wird der Interval gestoppt und die Nachricht angezeigt
+              clearInterval(countdown); //wir stoppen den Interval
+              timeoutOutput.textContent = "Die Verzögerung betrug 3 Sekunden."; //wir setzen den Text des Elements auf "Die Verzögerung betrug 3 Sekunden."
+
+              // Nachricht nach 2 Sekunden löschen. Noch einmal meine eigene Entscheidung, es kann auch anders sein
+              setTimeout(() => {
+                //wir setzen einen Timeout, der nach 2 Sekunden die Nachricht löscht, dafür nutzen wir die Funktion setTimeout(), mit callback Funktion (wir sagen, was gemacht werden soll) und wie lange darauf zu warten
+                timeoutOutput.textContent = ""; //wir setzen den Text des Elements auf ""
+              }, 2000); //wir setzen den Timeout auf 2 Sekunden = 2000 Millisekunden
+            }
+          }, 1000); //wir setzen den Interval auf 1 Sekunde,
+        });
+
+      // setInterval() und clearInterval() Beispiel
+      let colorInterval;
+
+      // Funktion, die einen zufälligen Hex-Farbwert generiert, wir hatten schon in einer der Aufgaben
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color; //wir geben die Farbe zurück in Hex-Format
+      }
+
+      document
+        .getElementById("intervalStartButton") // wir holen uns das Element mit der ID "intervalStartButton"
+        .addEventListener("click", function () {
+          //wir fügen einen EventListener hinzu, der auf das Klicken des Buttons reagiert
+          const intervalOutput = document.getElementById("intervalOutput"); //wir holen uns das Element mit der ID "intervalOutput"
+          intervalOutput.textContent =
+            "Hintergrundfarbe ändert sich jede Sekunde."; //wir setzen den Text des Elements auf "Hintergrundfarbe ändert sich jede Sekunde."
+          // Hintergrundfarbe alle 1 Sekunde ändern
+          colorInterval = setInterval(() => {
+            //wir setzen einen Interval, der jede Sekunde die Hintergrundfarbe ändert, dafür nutzen wir die Funktion setInterval() (heir haben wir eine callback funktion (wir sagen, was gemacht werden soll) und wie lange darauf zu warten) und die Funktion getRandomColor()
+            document.body.style.backgroundColor = getRandomColor(); //hier rufen wir die Funktion getRandomColor() auf und setzen die Hintergrundfarbe auf die zufällige Farbe
+          }, 1000); //wir setzen den Interval auf 1 Sekunde = 1000 Millisekunden
+        });
+
+      document
+        .getElementById("intervalStopDelayedButton") //wir holen uns das Element mit der ID "intervalStopDelayedButton"
+        .addEventListener("click", function () {
+          //wir fügen einen EventListener hinzu, der auf das Klicken des Buttons reagiert
+          // Stoppe das Intervall nach 5 Sekunden, nur meine eigene Entscheidung, es kann auch anders sein
+          let counter = 5;
+          const intervalOutput = document.getElementById("intervalOutput"); //wir holen uns das Element mit der ID "intervalOutput"
+          intervalOutput.textContent = `Stopp in: ${counter} Sekunden`; //wir setzen den Text des Elements auf "Stopp in: 5 Sekunden"
+
+          const countdown = setInterval(() => {
+            //wir setzen einen Interval, der jede Sekunde den Counter verringert, dafür nutzen wir die Variable counter
+            counter--; //wir verringern den Counter um 1
+            intervalOutput.textContent = `Stopp in: ${counter} Sekunden`; //wir setzen den Text des Elements auf "Stopp in: 4 Sekunden"
+
+            if (counter <= 0) {
+              //wenn der Counter kleiner oder gleich 0 ist, dann wird der Interval gestoppt und die Nachricht angezeigt
+              clearInterval(countdown); //wir stoppen den Interval
+              clearInterval(colorInterval); //wir stoppen den Interval, der die Hintergrundfarbe ändert
+              intervalOutput.textContent = "Schange gestoppt."; //wir setzen den Text des Elements auf "Schange gestoppt."
+            }
+          }, 1000); //wir setzen den Interval auf 1 Sekunde = 1000 Millisekunden, damit der Counter jede Sekunde verringert wird
+        });
+
+      document
+        .getElementById("intervalStopButton") //wir holen uns das Element mit der ID "intervalStopButton"
+        .addEventListener("click", function () {
+          // wir fügen einen EventListener hinzu, der auf das Klicken des Buttons reagiert
+          // Stoppe das Intervall sofort
+          clearInterval(colorInterval); //wir stoppen den Interval, der die Hintergrundfarbe ändert
+          document.getElementById("intervalOutput").textContent =
+            "Schange sofort gestoppt."; //wir setzen den Text des Elements auf "Schange sofort gestoppt."
+        });
+
+      // Footer aktualisieren
+      function updateFooter() {
+        //wir erstellen eine Funktion updateFooter()
+        const now = new Date(); //  wir erstellen eine neue Instanz von Date() und speichern sie in der Variable now
+        const date = now.getDate(); //wir holen uns den Tag und speichern ihn in der Variable date
+        const month = new Intl.DateTimeFormat("de-DE", {
+          //wir erstellen eine neue Instanz von DateTimeFormat() und speichern sie in der Variable month; wir nutzen die Optionen, um das Datum in deutscher Sprache anzuzeigen
+          month: "long", //wir setzen die Option month auf "long", um den Monat auszuschreiben mit dem vollen Namen
+        }).format(now); //wir formatieren das Datum und speichern es in der Variable month
+        const year = now.getFullYear(); //wir holen uns das Jahr und speichern es in der Variable year
+        const time = now.toLocaleTimeString("de-DE"); //wir holen uns die Zeit und speichern sie in der Variable time; wir nutzen die Optionen, um die Zeit in deutscher Sprache anzuzeigen
+
+        document.getElementById(
+          //wir holen uns das Element mit der ID "footerDateTime"
+          "footerDateTime"
+        ).textContent = `${date} ${month} ${year}, ${time}`; //wir setzen den Text des Elements auf das Datum und die Zeit
+      }
+
+      //Hier sind andere Beispiele, die auch funktionieren
+      //     const now = new Date();
+      //     const hours = String(now.getHours()).padStart(2, '0');
+      //     const minutes = String(now.getMinutes()).padStart(2, '0');
+      //     const seconds = String(now.getSeconds()).padStart(2, '0');
+      //     const day = String(now.getDate()).padStart(2, '0');
+      //     const month = now.toLocaleString('de', { month: 'long' });
+      //     const year = now.getFullYear();
+      //     const fullDate = now.toLocaleString('de');
+
+      // wir setzen einen Interval, der jede Sekunde den Footer aktualisiert
+      setInterval(updateFooter, 1000); //wir setzen einen Interval, der jede Sekunde die Funktion updateFooter() aufruft
+      updateFooter(); // wir rufen die Funktion updateFooter() auf, um den Footer sofort zu aktualisieren
+    </script>
+  </body>
+</html>
