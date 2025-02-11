@@ -210,7 +210,7 @@
               //wenn der Counter kleiner oder gleich 0 ist, dann wird der Interval gestoppt und die Nachricht angezeigt
               clearInterval(countdown); //wir stoppen den Interval
               clearInterval(colorInterval); //wir stoppen den Interval, der die Hintergrundfarbe ändert
-              intervalOutput.textContent = "Schange gestoppt."; //wir setzen den Text des Elements auf "Schange gestoppt."
+              intervalOutput.textContent = "Änderung gestoppt."; //wir setzen den Text des Elements auf "Änderung gestoppt."
             }
           }, 1000); //wir setzen den Interval auf 1 Sekunde = 1000 Millisekunden, damit der Counter jede Sekunde verringert wird
         });
@@ -222,7 +222,7 @@
           // Stoppe das Intervall sofort
           clearInterval(colorInterval); //wir stoppen den Interval, der die Hintergrundfarbe ändert
           document.getElementById("intervalOutput").textContent =
-            "Schange sofort gestoppt."; //wir setzen den Text des Elements auf "Schange sofort gestoppt."
+            "Änderung sofort gestoppt."; //wir setzen den Text des Elements auf "Änderung sofort gestoppt."
         });
 
       // Footer aktualisieren
